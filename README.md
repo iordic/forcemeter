@@ -1,6 +1,6 @@
 # Forcemeter
 A java & arduino tool to measure the force applied in a sensor (FSR).
-![Formeter windows](https://bitbucket.org/iordic/forcemeter/raw/master/screenshots/connected.png)
+![Formeter windows](https://bitbucket.org/iordic/forcemeter/raw/master/screenshots/connected_small.png)
 ## Required Java libraries
 * **RXTX**, library for serial comunication.
 * **JFreeChart**, library for graph drawing.
