@@ -5,8 +5,8 @@ A java & arduino tool to measure the force applied in a sensor (FSR).
 * **JFreeChart**, library for graph drawing.
 * **JCommon**, JFreeChart need it for working.
 
-## Installation steps
-You can use the libraries included in *lib* folder or download them (e.g. libs are outdate).
+## Installation
+You can use the libraries included in *lib* folder or download them (e.g. if libs are outdate).
 ### Download libraries
 * Download RXTX binaries (You can download it from [here](http://rxtx.qbang.org/wiki/index.php/Download)).
 * Download JFreeChart & JCommon libraries from its [sourceforge](https://sourceforge.net/projects/jfreechart/files/).
