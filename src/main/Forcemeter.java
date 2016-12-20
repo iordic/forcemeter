@@ -13,6 +13,11 @@ import gnu.io.SerialPort;
 import gnu.io.SerialPortEvent;
 import gnu.io.SerialPortEventListener;
 
+/**
+ * Controller class
+ * @author Jordi Castelló
+ *
+ */
 public class Forcemeter implements ActionListener, SerialPortEventListener {
 	int rawValue, forceValue;
 	Chart chart;
@@ -28,6 +33,9 @@ public class Forcemeter implements ActionListener, SerialPortEventListener {
 		fillPortList();		
 	}
 	
+	/**
+	 * Fill combobox list of available ports. If contains values, empty first
+	 */
 	private void fillPortList() {
 		String [] portNames = serial.getPortNames();
 		ventana.listaPuertos.removeAllItems();
@@ -60,7 +68,7 @@ public class Forcemeter implements ActionListener, SerialPortEventListener {
 					this.chart.timeSeriesCollection.getSeries(0).add(new Millisecond(),forceValue);
 				}
 				
-				DecimalFormat fDec = new DecimalFormat("#.##");	// Formato de salida del número decimal (2 decimales).				
+				DecimalFormat fDec = new DecimalFormat("#.##");	// Output decimal format				
 				ventana.etiForce.setText("Force: " + forceValue + " N");
 				ventana.etiVoltage.setText("Voltage: " + fDec.format(((float) rawValue * 0.0048828125F)) + " V");
 				ventana.etiRaw.setText("Raw Value: " + rawValue);
@@ -96,8 +104,8 @@ public class Forcemeter implements ActionListener, SerialPortEventListener {
 	}
 
 	/**
-	 * Inicializa la conexión con el puerto pasado por parámetro.
-	 * @param portId Identificador del puerto que queremos inicializar.
+	 * Initializes port passed by parameter
+	 * @param portId id of port to initialize
 	 */
 	public BufferedReader initialize(CommPortIdentifier portId) {
 		try {
@@ -122,7 +130,7 @@ public class Forcemeter implements ActionListener, SerialPortEventListener {
 	}
 	
 	/**
-	 * Cierra la conexión con el puerto (recomendado en sistemas linux).
+	 * Close connection with the port (recommended in linux systems)
 	 */
 	public synchronized void close() {
 		if (serial.serialPort != null) {

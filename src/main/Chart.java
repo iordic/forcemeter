@@ -7,6 +7,11 @@ import org.jfree.chart.plot.XYPlot;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 
+/**
+ * Graphs class
+ * @author Jordi Castelló
+ *
+ */
 public class Chart {
 	TimeSeriesCollection timeSeriesCollection; // Collection of time series data
 	TimeSeries seriesX; // X series data
@@ -19,7 +24,10 @@ public class Chart {
 		chart = createChart();
 	}
 	
-	
+	/**
+	 * Create the chart that draws the graphics
+	 * @return created chart
+	 */
 	private JFreeChart createChart() {
         JFreeChart chart = ChartFactory.createTimeSeriesChart(
             "Force Graph",  		// title

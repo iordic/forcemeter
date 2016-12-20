@@ -7,6 +7,11 @@ import java.util.Enumeration;
 import gnu.io.CommPortIdentifier;
 import gnu.io.SerialPort;
 
+/**
+ * IO Serial ports
+ * @author Jordi Castelló
+ *
+ */
 public class Serial {
 	SerialPort serialPort;
 	ArrayList <CommPortIdentifier> ports;
@@ -16,16 +21,15 @@ public class Serial {
 	int rawValue, forceValue;
 	
 	public Serial() {
-		searchPorts();
+		searchPorts();	// Fill ports array
 	}
 	
 	/**
-	 * Busca los puertos disponibles y los devuelve en un array.
-	 * @return puertos disponibles.
+	 * Search available ports and fills array with them.
 	 */
 	public void searchPorts() {
 		ArrayList<CommPortIdentifier> portsFound = new ArrayList<CommPortIdentifier>();
-        @SuppressWarnings("unchecked")	// Esto daba la brasa
+        @SuppressWarnings("unchecked")	// Annoying, supressed warning
 		Enumeration<CommPortIdentifier> portEnum = CommPortIdentifier.getPortIdentifiers();
         while (portEnum.hasMoreElements()) {
             CommPortIdentifier portIdentifier = portEnum.nextElement();
@@ -34,15 +38,23 @@ public class Serial {
         ports = portsFound;
     }
 	
+	/**
+	 * Return the array that contains the available ports.
+	 * @return list of available ports
+	 */
 	public ArrayList<CommPortIdentifier> getPorts() {
 		return ports;
 	}
 	
+	/**
+	 * Extract names of available ports from ports array and puts into another array.
+	 * @return array that contain all names of available ports
+	 */
 	public String [] getPortNames() {
-		String [] portNames = new String[ports.size()];	// Creamos un array que contendrá los nombres de los puertos
+		String [] portNames = new String[ports.size()];		// This array will contain the name of available ports.
 		for (int i = 0; i < portNames.length; i++) {
-			if (ports.get(i).getPortType() == CommPortIdentifier.PORT_SERIAL) {	// Solo queremos listar puertos serie
-				portNames[i] = ports.get(i).getName();
+			if (ports.get(i).getPortType() == CommPortIdentifier.PORT_SERIAL) {	
+				portNames[i] = ports.get(i).getName();		// Get only names of serial ports
 			}
 		}	
 		return portNames;
