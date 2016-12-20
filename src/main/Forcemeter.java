@@ -22,14 +22,14 @@ public class Forcemeter implements ActionListener, SerialPortEventListener {
 	int rawValue, forceValue;
 	Chart chart;
 	Serial serial;
-	GUI ventana;
+	GUI window;
 	
 	public Forcemeter() {
 		chart = new Chart();
 		serial = new Serial();
-		ventana = new GUI(chart.getChart());
-		ventana.connectBtn.addActionListener(this);
-		ventana.refreshPortsBtn.addActionListener(this);
+		window = new GUI(chart.getChart());
+		window.connectBtn.addActionListener(this);
+		window.refreshPortsBtn.addActionListener(this);
 		fillPortList();		
 	}
 	
@@ -38,20 +38,20 @@ public class Forcemeter implements ActionListener, SerialPortEventListener {
 	 */
 	private void fillPortList() {
 		String [] portNames = serial.getPortNames();
-		ventana.listaPuertos.removeAllItems();
+		window.portsList.removeAllItems();
 		for(int i = 0; i < portNames.length; i++) {
-			ventana.listaPuertos.addItem(portNames[i]);
+			window.portsList.addItem(portNames[i]);
 		}
 		try {
-			ventana.connectBtn.setEnabled(true);
-			ventana.listaPuertos.setSelectedIndex(0);
-			ventana.connectBtn.setText("Connect");
-			ventana.listaPuertos.setEnabled(true);
+			window.connectBtn.setEnabled(true);
+			window.portsList.setSelectedIndex(0);
+			window.connectBtn.setText("Connect");
+			window.portsList.setEnabled(true);
 		}
 		catch (IllegalArgumentException e) {
-			ventana.connectBtn.setText("Any port found");
-			ventana.listaPuertos.setEnabled(false);
-			ventana.connectBtn.setEnabled(false);
+			window.connectBtn.setText("Any port found");
+			window.portsList.setEnabled(false);
+			window.connectBtn.setEnabled(false);
 		}
 	}
 	
@@ -69,11 +69,11 @@ public class Forcemeter implements ActionListener, SerialPortEventListener {
 				}
 				
 				DecimalFormat fDec = new DecimalFormat("#.##");	// Output decimal format				
-				ventana.etiForce.setText("Force: " + forceValue + " N");
-				ventana.etiVoltage.setText("Voltage: " + fDec.format(((float) rawValue * 0.0048828125F)) + " V");
-				ventana.etiRaw.setText("Raw Value: " + rawValue);
+				window.forceLabel.setText("Force: " + forceValue + " N");
+				window.voltageLabel.setText("Voltage: " + fDec.format(((float) rawValue * 0.0048828125F)) + " V");
+				window.rawLabel.setText("Raw Value: " + rawValue);
 			} catch (Exception e) {
-				System.out.println(e);
+				//System.out.println(e); // Annoying in console
 			}
 		}
 	}
@@ -81,22 +81,22 @@ public class Forcemeter implements ActionListener, SerialPortEventListener {
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		if(event.getActionCommand().equals("connect")){
-			initialize(serial.ports.get(ventana.listaPuertos.getSelectedIndex()));
-			ventana.listaPuertos.setEnabled(false);
-			ventana.refreshPortsBtn.setEnabled(false);
-			ventana.connectBtn.setText("Disconnect");
-			ventana.connectBtn.setActionCommand("disconnect");
+			initialize(serial.ports.get(window.portsList.getSelectedIndex()));
+			window.portsList.setEnabled(false);
+			window.refreshPortsBtn.setEnabled(false);
+			window.connectBtn.setText("Disconnect");
+			window.connectBtn.setActionCommand("disconnect");
 			return;
 		}
 		if(event.getActionCommand().equals("disconnect")){
 			close();
-			ventana.listaPuertos.setEnabled(true);
-			ventana.refreshPortsBtn.setEnabled(true);
-			ventana.connectBtn.setText("Connect");
-			ventana.connectBtn.setActionCommand("connect");
+			window.portsList.setEnabled(true);
+			window.refreshPortsBtn.setEnabled(true);
+			window.connectBtn.setText("Connect");
+			window.connectBtn.setActionCommand("connect");
 			return;
 		}
-		if(event.getSource() == ventana.refreshPortsBtn) {
+		if(event.getSource() == window.refreshPortsBtn) {
 			serial.searchPorts();
 			fillPortList();
 			return;

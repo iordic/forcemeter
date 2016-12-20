@@ -21,9 +21,9 @@ import org.jfree.chart.JFreeChart;
  */
 public class GUI extends JFrame {
 	private static final long serialVersionUID = 2035189298017959734L;
-	JLabel etiPorts, etiForce, etiVoltage, etiRaw, etiRate;
+	JLabel portsLabel, forceLabel, voltageLabel, rawLabel, rateLabel;
 	Font fontValue;
-	JComboBox <String> listaPuertos;
+	JComboBox <String> portsList;
 	JButton connectBtn, refreshPortsBtn;
 	ImageIcon resetIcon;
 	
@@ -34,47 +34,47 @@ public class GUI extends JFrame {
 		chartPanel.setFillZoomRectangle(true);
 		chartPanel.setMouseWheelEnabled(false);
 		
-		etiPorts = new JLabel("Available serial ports:");
-		etiForce = new JLabel("Force:");
-		etiVoltage = new JLabel("Voltage:");
-		etiRaw = new JLabel("Raw value:");
-		etiRate = new JLabel("Data rate: " + Serial.DATA_RATE + " bps");
-		etiRate.setFont(new Font(Font.SERIF, Font.BOLD, 11));	// Establish label font
+		portsLabel = new JLabel("Available serial ports:");
+		forceLabel = new JLabel("Force:");
+		voltageLabel = new JLabel("Voltage:");
+		rawLabel = new JLabel("Raw value:");
+		rateLabel = new JLabel("Data rate: " + Serial.DATA_RATE + " bps");
+		rateLabel.setFont(new Font(Font.SERIF, Font.BOLD, 11));	// Establish label font
 		
 		fontValue = new Font(Font.SANS_SERIF, Font.BOLD, 15);	// Create a font for labels that contains the values
-		etiForce.setFont(fontValue);							// Apply fonts
-		etiVoltage.setFont(fontValue);
-		etiRaw.setFont(fontValue);
+		forceLabel.setFont(fontValue);							// Apply fonts
+		voltageLabel.setFont(fontValue);
+		rawLabel.setFont(fontValue);
 		
-		listaPuertos = new JComboBox<String>();		
+		portsList = new JComboBox<String>();		
 		connectBtn = new JButton("Connect");
 		refreshPortsBtn = new JButton();
 		refreshPortsBtn.setIcon(resetIcon);
 		refreshPortsBtn.setToolTipText("Refresh list");
 
 		// Distribution of the elements
-		etiPorts.setBounds(10, 20, 130, 20);
-		listaPuertos.setBounds(140, 20, 135	, 20);
+		portsLabel.setBounds(10, 20, 130, 20);
+		portsList.setBounds(140, 20, 135	, 20);
 		refreshPortsBtn.setBounds(280, 20, 20, 20);
 		connectBtn.setBounds(310, 20, 120, 20);
-		etiForce.setBounds(15, 60, 300, 20);
-		etiVoltage.setBounds(15, 80, 300, 20);
-		etiRaw.setBounds(15, 100, 300, 20);
-		etiRate.setBounds(335, 445, 120, 20);
+		forceLabel.setBounds(15, 60, 300, 20);
+		voltageLabel.setBounds(15, 80, 300, 20);
+		rawLabel.setBounds(15, 100, 300, 20);
+		rateLabel.setBounds(335, 445, 120, 20);
 		chartPanel.setBounds(15, 150, 400, 300);
 		// Set button command and disable
 		connectBtn.setActionCommand("connect");	
 		connectBtn.setEnabled(false);
 
 		// Add elements to the window
-		add(etiPorts);
-		add(listaPuertos);
+		add(portsLabel);
+		add(portsList);
 		add(connectBtn);
 		add(refreshPortsBtn);
-		add(etiForce);
-		add(etiVoltage);
-		add(etiRaw);
-		add(etiRate);
+		add(forceLabel);
+		add(voltageLabel);
+		add(rawLabel);
+		add(rateLabel);
 		add(chartPanel);
 		// Window configuration
 		setTitle("Forcemeter");
