@@ -2,6 +2,7 @@ package main;
 
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.Toolkit;
 
 import javax.swing.ImageIcon;
@@ -26,10 +27,13 @@ public class GUI extends JFrame {
 	JComboBox <String> portsList;
 	JButton connectBtn, refreshPortsBtn;
 	ImageIcon resetIcon;
+	Image appIcon;
+	private final String APP_ICON = "res/appIcon.png";
+	private final String RESET_ICON = "res/resetIcon.png";
 	
 	public GUI(JFreeChart chart) {
 		getContentPane().setLayout(null);	// Freedom for locate the elements in the frame
-		resetIcon = new ImageIcon(this.getClass().getResource("res/resetIcon.png"));
+		resetIcon = new ImageIcon(this.getClass().getResource(RESET_ICON));
 		ChartPanel chartPanel = new ChartPanel(chart);
 		chartPanel.setFillZoomRectangle(true);
 		chartPanel.setMouseWheelEnabled(false);
@@ -77,6 +81,8 @@ public class GUI extends JFrame {
 		add(rateLabel);
 		add(chartPanel);
 		// Window configuration
+		appIcon = new ImageIcon(this.getClass().getResource(APP_ICON)).getImage();
+		setIconImage(appIcon);
 		setTitle("Forcemeter");
 		setSize(450, 500);
 		centerFrame();
