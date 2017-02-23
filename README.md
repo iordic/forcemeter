@@ -20,5 +20,3 @@ You can use the libraries included in *lib* folder or download them (e.g. if lib
 * **16x2 LCD** Screen (optionally **LCD-I2C** adapter, less cables, there are two codes for each one).
 * **FSR** Sensor (in this project we have used an Interlink 402 round from adafruit).
 * Buttons, cables, case, etc...
-
-You can found more info at [wiki](https://bitbucket.org/iordic/forcemeter/wiki/).
