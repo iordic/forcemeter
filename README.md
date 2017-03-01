@@ -16,6 +16,7 @@ You can use the libraries included in *lib* folder or download them (e.g. if lib
 1. When you download the binary package, you have to copy "**rxtxSerial.dll**" file to "*%PROGRAMFILES%\\Java\\jre.x.x_xxx\\bin*".
 2. The project was made with eclipse. You have to import with eclipse and then import "**RXTXcomm.jar**" as an external jar file. (Also in RXTX downloaded package)
 3. Finally, import the JFreeChart & JCommon needed libraries as an external jar files too.
+
 ## Required Hardware
 * **Arduino board** (this project was implemented in *Mini Pro*).
 * If arduino board doesn't have, an **usb-to-ttl** serial adapter.
