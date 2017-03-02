@@ -1,6 +1,6 @@
 # Forcemeter
 A java & arduino tool to measure the force applied in a sensor (FSR).
-![Running screenshot](forcemeter/screenshots/connected_small.png)
+![Running screenshot](/screenshots/connected_small.png)
 ## Required Java libraries (included in lib folder)
 * **RXTX**, library for serial comunication.
 * **JFreeChart**, library for graph drawing.
