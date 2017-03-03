@@ -68,11 +68,12 @@
     }
     if(tared) lcd.write("T");
     else lcd.write(" "); 
-    //fsrCalc();   
-    Serial.print("F");        // Enviamos los datos por el puerto serie, el primer carácter determina
-    Serial.println(fsrForce); // que tipo de dato estamos enviando, para poder filtrarlo en Java.
-    Serial.print("R");
-    Serial.println(fsrReading);
+    // We send values with JSON format:
+    Serial.print("{\"force\":");
+    Serial.print(fsrForce);
+    Serial.print(",\"raw\":");
+    Serial.print(fsrReading);
+    Serial.println("}");
     delay(200);
   }
 

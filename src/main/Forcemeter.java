@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.text.DecimalFormat;
 
 import org.jfree.data.time.Millisecond;
+import org.json.JSONObject;
 
 import gnu.io.CommPortIdentifier;
 import gnu.io.SerialPort;
@@ -60,14 +61,10 @@ public class Forcemeter implements ActionListener, SerialPortEventListener {
 		if (event.getEventType() == SerialPortEvent.DATA_AVAILABLE) {
 			try {
 				String inputLine = serial.input.readLine();
-				if(inputLine.charAt(0) == 'R'){
-					rawValue = Integer.parseInt(inputLine.substring(1));
-				}
-				if(inputLine.charAt(0) == 'F'){
-					forceValue = Integer.parseInt(inputLine.substring(1));
-					this.chart.timeSeriesCollection.getSeries(0).add(new Millisecond(),forceValue);
-				}
-				
+				JSONObject values = new JSONObject(inputLine);	// JSON decode info
+				rawValue = values.getInt("raw");
+				forceValue = values.getInt("force");
+				this.chart.timeSeriesCollection.getSeries(0).add(new Millisecond(),forceValue);			
 				DecimalFormat fDec = new DecimalFormat("#.##");	// Output decimal format				
 				window.forceLabel.setText("Force: " + forceValue + " N");
 				window.voltageLabel.setText("Voltage: " + fDec.format(((float) rawValue * 0.0048828125F)) + " V");
