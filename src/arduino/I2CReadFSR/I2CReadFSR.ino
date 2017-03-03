@@ -47,11 +47,14 @@
     lcd.print(" N");
     lcd.print("     ");
     lcd.setCursor(14,1);  // Posición para el símbolo del candado   
-    if(lockButtonValue == LOW && locked == true) locked = false;    
-    else if(lockButtonValue == LOW && locked == false) locked = true;        
-    if(lockButtonValue == LOW || tarButtonValue == LOW){
-      tone(piezoPin, 3000, 50); // Pitido (pin, frecuencia <hz>, duración <ms>)    
-    }    
+    if(lockButtonValue == LOW && locked == true){
+      waitKeyUp(lockButton);
+      locked = false;    
+    }
+    else if(lockButtonValue == LOW && locked == false){
+      waitKeyUp(lockButton);
+      locked = true;         
+    }
     if(!locked){
       fsrCalc();
       //lcd.print(byte(0));
@@ -62,14 +65,19 @@
       lcd.print("F"); // Fixed value
     }  
     if(tarButtonValue == LOW && tared){
-        fsrForceTar = 0L;
-        tared = false;
+      waitKeyUp(tarButton);
+      fsrForceTar = 0L;
+      tared = false;
     }
     else if(tarButtonValue == LOW && !tared) {
-        setTare();
-        tared = true;    
+      waitKeyUp(tarButton);
+      setTare();
+      tared = true;    
       
     }
+    if(lockButtonValue == LOW || tarButtonValue == LOW){
+      tone(piezoPin, 3000, 50); // Beep (pin, frecuency <hz>, duration <ms>)    
+    } 
     if(tared) lcd.print("T");
     else lcd.print(" "); 
     // We send values with JSON format:
@@ -78,7 +86,7 @@
     Serial.print(",\"raw\":");
     Serial.print(fsrReading);
     Serial.println("}");
-    delay(200);
+    delay(150);
   }
 
   /**
@@ -125,3 +133,12 @@
     fsrForceTar = fsrForce;
   }
 
+  /**
+   * Wait here until we release pressed button.
+   */
+  void waitKeyUp(int button) {
+    delay(10);
+    while(digitalRead(button) == LOW) {
+      delay(10);
+    }
+  }
