@@ -1,52 +1,52 @@
-/* Lectura de fuerza de un sensor FSR
+/* Force reading with FSR
  * ==================================
- * Lee los valores del sensor FSR en uno de los puertos analógicos. Estos valores los muestra en un LCD 16x2 
- * y los envía por serie para poder manejarlos desde el ordenador con la librería RXTX de Arduino para Java.
+ * Read values from FSR in the A0 pin. This values are displayed in a 16x2 LCD Screen 
+ * and data is send through serial port in JSON format. 
  * 
- * Autor: Jordi Castelló
+ * Author: Jordi Castelló
  */
 #include <LiquidCrystal_I2C.h>
 
   // Pines y constantes:
-  const int fsrPin = 0;     // FSR conectado al pin A0 con un pulldown de 10K
-  const int piezoPin = 6;   // Zumbador conectado a la patilla 6 (Patilla con PWM)
-  const int tarButton = 7;  // Pines digitales
+  const int fsrPin = 0;     // FSR connected to A0 pin with 10K pulldown resistor
+  const int piezoPin = 6;   // Beeper connected to pin number 6 (this pin can implement PWM)
+  const int tarButton = 7;  // Digital pins
   const int lockButton = 8;
-  // No funciona lo de abajo, al parecer es por cambiar lcd.write() por lcd.print:
-  //byte padlockClose[8] =  { B01110, B10001, B10001, B10001, B11111, B11011, B11011, B01110 }; // Carácter candado cerrado
-  //byte padlockOpen[8] = { B01110, B10001, B10000, B10000, B11111, B11011, B11011, B01110 }; // Carácter candado abierto
-  LiquidCrystal_I2C lcd(0x3F,16,2);  // Dirección I2C: 0x3F, Columnas, Filas
+  // It Doesn't work, apparently it is for changing lcd.write() by lcd.print():
+  //byte padlockClose[8] =  { B01110, B10001, B10001, B10001, B11111, B11011, B11011, B01110 }; // Locked Symbol
+  //byte padlockOpen[8] = { B01110, B10001, B10000, B10000, B11111, B11011, B11011, B01110 };   // Unlocked Symbol
+  LiquidCrystal_I2C lcd(0x3F,16,2);  // I2C address: 0x3F, Columns, Rows
   
   // Variables:  
   int tarButtonValue, lockButtonValue, fsrReading;
   boolean locked = false, tared;     // if true, screen value is locked.
-  // Variables para cálculos:
+  // Calculation variables:
   long fsrForce;       // Finally, the resistance converted to force
   long fsrForceTar = 0L;
   
   void setup() {
     Serial.begin(9600);
     pinMode(piezoPin, OUTPUT);
-    pinMode(tarButton, INPUT_PULLUP);     // Botón conectado a gnd y al pin.
-    pinMode(lockButton, INPUT_PULLUP);    // Tienen pull-up interno.
+    pinMode(tarButton, INPUT_PULLUP);     // Buttons connected between GND & pin.
+    pinMode(lockButton, INPUT_PULLUP);    // Internal pull-up configuration.
     //lcd.createChar(0, padlockOpen);
     //lcd.createChar(1, padlockClose);
     lcd.backlight();
-    lcd.init(); // El lcd tiene 16 columnas y 2 filas.
+    lcd.init();
   }
   
   void loop() {
     tarButtonValue = digitalRead(tarButton);
     lockButtonValue = digitalRead(lockButton);
-    lcd.setCursor(0,0); // Para posicionar el cursor en la pantalla (columna, fila)
+    lcd.setCursor(0,0); // Set cursor position at screen (column, row)
     lcd.print("Force in Newtons");
-    lcd.setCursor(0,1); // (Columna, fila)   
+    lcd.setCursor(0,1); // (column, row)  
     lcd.print("F: "); 
     lcd.setCursor(3,1);
     lcd.print(fsrForce);
     lcd.print(" N");
     lcd.print("     ");
-    lcd.setCursor(14,1);  // Posición para el símbolo del candado   
+    lcd.setCursor(14,1);   // Lock symbol position
     if(lockButtonValue == LOW && locked == true){
       waitKeyUp(lockButton);
       locked = false;    
@@ -90,10 +90,10 @@
   }
 
   /**
-   * Realiza los cálculos de fuerza según el valor analógico de entrada.
+   * Do force calculations with the analog pin reads.
    */
   void fsrCalc() {
-    // Código sacado de la página de Adafruit, tutorial de FSR (ligeramente modificado).   
+    // Code from Adafruit FSR (a bit modified)
     int fsrVoltage;     // the analog reading converted to voltage
     unsigned long fsrResistance;  // The voltage converted to resistance, can be very big so make "long"
     unsigned long fsrConductance;    
@@ -125,8 +125,7 @@
   }
   
   /**
-   * Para tarar, toma el valor actual como referencia de 0. Guarda el valor de la fuerza
-   * actual para posteriormente restarlo a la fuerza que tengamos.
+   * Set the current force value as if it were the actual force value.
    */
   void setTare() {
     fsrCalc();
