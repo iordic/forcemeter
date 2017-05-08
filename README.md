@@ -13,7 +13,7 @@ You can use the libraries included in *lib* folder or download them (e.g. if lib
 Necessary rxtxSerial.dll bins are in *res* folder in a zip file.
 
 ### Download libraries
-* Download RXTX binaries (You can download it from [here](http://rxtx.qbang.org/wiki/index.php/Download)  :small_red_triangle_down:Down).
+* ~~Download RXTX binaries (You can download it from [here](http://rxtx.qbang.org/wiki/index.php/Download)).~~ :small_red_triangle_down:Down
 * Download JFreeChart & JCommon libraries from its [sourceforge](https://sourceforge.net/projects/jfreechart/files/).
 * You can download and compile JSON-Java into jar file, from the original repo, [here](https://github.com/stleary/JSON-java).
 
